@@ -29,8 +29,8 @@ let exchangeRatesECB = (function () {
             .map((elem) => {
                 return Object.values(Object.values(elem.attributes)).reduce(
                     (acc, cur) => {
-                        const key = cur.name;
-                        const val = cur.value;
+                        const key = cur.name.toLowerCase();
+                        const val = cur.value.toLowerCase();
                         acc[key] = val;
                         return acc;
                     }, {});
@@ -46,7 +46,7 @@ let exchangeRatesECB = (function () {
                 }
                 return acc;
             }, {});
-        // console.log(rates);
+        console.log(rates);
     }, (err) => {
         console.log(err);
     });
@@ -73,31 +73,42 @@ let exchangeRatesECB = (function () {
     function listCurrencies() {
         if (rates.hasOwnProperty('currencies')) {
             return rates.currencies.map((currencyDetails) => {
-                return currencyDetails.currency;
+                return currencyDetails.currency.toUpperCase();
             });
         } else {
             return [];
         }
     }
 
-    function convertAmountToEur(amount, currency) {
-        updateRates();
-        const fxRate = rates.currencies
+    function getFxRateOf(currency) {
+        return rates.currencies
             .filter((currencyDetails) => {
-                return currencyDetails.currency === currency;
+                return currencyDetails.currency === currency.toLowerCase();
             })    
             .map((currencyDetails) => {
                 return currencyDetails.rate;
             })[0];
+    }
 
-        console.log(fxRate);
+    function convertAmountToEur(amount, currency) {
+        updateRates();
+        const fxRate = getFxRateOf(currency);
+
         return parseFloat(amount / fxRate);
+    }
+
+    function convertAmountFromTo(amount, fromCurrency, toCurrency) {
+        const amountInEur = convertAmountToEur(amount, fromCurrency);
+        const fxRate = getFxRateOf(toCurrency);
+        
+        return parseFloat(amountInEur * fxRate);
     }
 
     return {
         updateRates,
         listCurrencies,
-        convertAmountToEur
+        convertAmountToEur,
+        convertAmountFromTo
     }
 
 })();
