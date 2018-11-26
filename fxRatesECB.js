@@ -30,7 +30,7 @@ let exchangeRatesECB = (function () {
                 return Object.values(Object.values(elem.attributes)).reduce(
                     (acc, cur) => {
                         const key = cur.name.toLowerCase();
-                        const val = cur.value.toLowerCase();
+                        const val = cur.value;
                         acc[key] = val;
                         return acc;
                     }, {});
@@ -72,7 +72,7 @@ let exchangeRatesECB = (function () {
     function listCurrencies() {
         if (rates.hasOwnProperty('currencies')) {
             return rates.currencies.map((currencyDetails) => {
-                return currencyDetails.currency.toUpperCase();
+                return currencyDetails.currency;
             });
         } else {
             return [];
@@ -82,7 +82,7 @@ let exchangeRatesECB = (function () {
     function getFxRateOf(currency) {
         return rates.currencies
             .filter((currencyDetails) => {
-                return currencyDetails.currency === currency.toLowerCase();
+                return currencyDetails.currency.toLowerCase() === currency.toLowerCase();
             })    
             .map((currencyDetails) => {
                 return currencyDetails.rate;
