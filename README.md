@@ -1,6 +1,6 @@
 # FX Rates ECB
 
-A simple JS plugin, which gets the daily Euro foreign exchange reference rates, provided on the ECB website in an XML file.
+A simple JS plugin, which gets the daily Euro foreign exchange reference rates, provided by an API on the ECB website.
 
 ### More info about the ECB servide:
 
