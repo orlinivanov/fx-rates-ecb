@@ -100,15 +100,20 @@ let exchangeRatesECB = (function () {
     function convertAmountFromTo(amount, fromCurrency, toCurrency) {
         const amountInEur = convertAmountToEur(amount, fromCurrency);
         const fxRate = getFxRateOf(toCurrency);
-        
+
         return parseFloat(amountInEur * fxRate);
+    }
+
+    function toJSON() {
+        return JSON.stringify(rates);
     }
 
     return {
         updateRates,
         listCurrencies,
         convertAmountToEur,
-        convertAmountFromTo
+        convertAmountFromTo,
+        toJSON
     }
 
 })();
