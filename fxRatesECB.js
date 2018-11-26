@@ -46,7 +46,6 @@ let exchangeRatesECB = (function () {
                 }
                 return acc;
             }, {});
-        console.log(rates);
     }, (err) => {
         console.log(err);
     });
@@ -115,5 +114,4 @@ let exchangeRatesECB = (function () {
         convertAmountFromTo,
         toJSON
     }
-
 })();
