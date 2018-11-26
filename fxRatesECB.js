@@ -1,7 +1,7 @@
 let exchangeRatesECB = (function () {
     let rates = {};
     
-    function getRates() {
+    function getRatesData() {
         const ratesURL = 'https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml';
         return new Promise((resolve, reject) => {
             let request = new XMLHttpRequest();
@@ -21,7 +21,7 @@ let exchangeRatesECB = (function () {
         });
     }
     
-    getRates().then((response) => {
+    getRatesData().then((response) => {
         rates = Array.from(response.querySelectorAll('Cube'))
             .filter((elem) => {
                 return elem.attributes.length > 0;
@@ -46,7 +46,7 @@ let exchangeRatesECB = (function () {
                 }
                 return acc;
             }, {});
-        console.log(rates);
+        // console.log(rates);
     }, (err) => {
         console.log(err);
     });
@@ -66,7 +66,7 @@ let exchangeRatesECB = (function () {
                 return false;
             }
         }
-        getRates();
+        getRatesData();
         return true;
     }
 
