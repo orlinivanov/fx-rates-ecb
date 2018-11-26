@@ -1,8 +1,8 @@
 let exchangeRatesECB = (function () {
-    const ratesURL = 'https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml';
     let rates = {};
-
+    
     function getRates() {
+        const ratesURL = 'https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml';
         return new Promise((resolve, reject) => {
             let request = new XMLHttpRequest();
             request.open('GET', ratesURL);
@@ -46,13 +46,32 @@ let exchangeRatesECB = (function () {
                 }
                 return acc;
             }, {});
-        // console.log(rates);
+        console.log(rates);
     }, (err) => {
         console.log(err);
     });
 
+    function updateRates() {
+        if (rates.hasOwnProperty('date')) {
+            let today = new Date();
+            let yesterday = new Date();
+            if (today.getDay() !== 1) {
+                yesterday.setDate(today.getDate() - 1);
+            } else {
+                yesterday.setDate(today.getDate() - 3);
+            }
+            let todayFrmatted = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
+            let yesterdayFormatted = `${yesterday.getFullYear()}-${yesterday.getMonth() + 1}-${yesterday.getDate()}`;
+            if (rates.date === todayFrmatted || rates.date === yesterdayFormatted) {
+                return false;
+            }
+        }
+        getRates();
+        return true;
+    }
+
     return {
-        getRates: getRates
+        updateRates
     }
 
 })();
