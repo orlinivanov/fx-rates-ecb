@@ -11,7 +11,7 @@ let exchangeRatesECB = (function () {
                 if (request.status === 200) {
                     resolve(request.response);
                 } else {
-                    reject(Error('Data didn\'t load successfully; error code:' + request.statusText));
+                    reject(Error(`Data didn't load successfully; error code: ${request.statusText}`));
                 }
             };
             request.onerror = () => {
