@@ -80,9 +80,24 @@ let exchangeRatesECB = (function () {
         }
     }
 
+    function convertAmountToEur(amount, currency) {
+        updateRates();
+        const fxRate = rates.currencies
+            .filter((currencyDetails) => {
+                return currencyDetails.currency === currency;
+            })    
+            .map((currencyDetails) => {
+                return currencyDetails.rate;
+            })[0];
+
+        console.log(fxRate);
+        return parseFloat(amount / fxRate);
+    }
+
     return {
         updateRates,
-        listCurrencies
+        listCurrencies,
+        convertAmountToEur
     }
 
 })();
