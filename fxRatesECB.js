@@ -70,8 +70,19 @@ let exchangeRatesECB = (function () {
         return true;
     }
 
+    function listCurrencies() {
+        if (rates.hasOwnProperty('currencies')) {
+            return rates.currencies.map((currencyDetails) => {
+                return currencyDetails.currency;
+            });
+        } else {
+            return [];
+        }
+    }
+
     return {
-        updateRates
+        updateRates,
+        listCurrencies
     }
 
 })();
